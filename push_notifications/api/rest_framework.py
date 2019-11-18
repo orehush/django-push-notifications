@@ -59,6 +59,9 @@ class APNSDeviceSerializer(ModelSerializer):
 
 class UniqueRegistrationSerializerMixin(Serializer):
 	def validate(self, attrs):
+		if not SETTINGS.get("ONE_TOKEN_PER_USER"):
+			return attrs
+
 		devices = None
 		primary_key = None
 		request_method = None
